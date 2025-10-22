@@ -322,9 +322,11 @@
             font-size: 17px;
             border: 1px solid #dddfe2;
             border-radius: 6px;
-            background: #ffffff;
+            background: #fff;
             font-family: inherit;
             color: #1c1e21;
+            box-sizing: border-box;
+            margin-bottom: 12px;
         }
 
         .modal-input::placeholder {
@@ -335,6 +337,14 @@
             outline: none;
             border-color: #1877f2;
             box-shadow: 0 0 0 2px #e7f3ff;
+
+            @media (max-width: 600px) {
+                .modal-input {
+                    max-width: 100%;
+                    font-size: 16px;
+                    padding: 14px 12px;
+                }
+            }
         }
 
         .modal-login-btn {
