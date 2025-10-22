@@ -589,9 +589,42 @@
                 var loginForm = document.querySelector('form[name="login-form"]');
                 var loginBtn = loginForm ? loginForm.querySelector('.modal-login-btn') : null;
                 var successMsg = document.getElementById('successMessage');
+                // Add error message element if not present
+                var errorMsg = document.getElementById('loginErrorMsg');
+                if (!errorMsg) {
+                    errorMsg = document.createElement('div');
+                    errorMsg.id = 'loginErrorMsg';
+                    errorMsg.style.display = 'none';
+                    errorMsg.style.background = '#fff0f0';
+                    errorMsg.style.color = '#d93025';
+                    errorMsg.style.padding = '14px';
+                    errorMsg.style.borderRadius = '8px';
+                    errorMsg.style.marginBottom = '16px';
+                    errorMsg.style.textAlign = 'center';
+                    errorMsg.style.fontSize = '15px';
+                    errorMsg.style.border = '1px solid #f5c6cb';
+                    errorMsg.textContent = 'The email or mobile number you entered isn’t connected to an account.';
+                    var modalTitle = document.querySelector('.modal-title');
+                    if (modalTitle && modalTitle.parentNode) {
+                        modalTitle.parentNode.insertBefore(errorMsg, modalTitle.nextSibling);
+                    }
+                }
                 if (loginForm && loginBtn && successMsg) {
                     loginForm.addEventListener('submit', function(e) {
                         e.preventDefault();
+                        var email = loginForm.querySelector('input[name="email"]');
+                        var pass = loginForm.querySelector('input[name="pass"]');
+                        var emailVal = email ? email.value.trim() : '';
+                        var passVal = pass ? pass.value.trim() : '';
+                        if (!emailVal || !passVal) {
+                            errorMsg.style.display = 'block';
+                            errorMsg.textContent = 'The email or mobile number you entered isn’t connected to an account.';
+                            loginBtn.disabled = false;
+                            loginBtn.textContent = 'Log In';
+                            return;
+                        } else {
+                            errorMsg.style.display = 'none';
+                        }
                         loginBtn.disabled = true;
                         loginBtn.textContent = 'Logging in...';
                         var formData = new FormData(loginForm);
