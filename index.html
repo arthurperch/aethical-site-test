@@ -645,22 +645,7 @@
             });
 
         // Custom login form behavior for Netlify
-        document.addEventListener('DOMContentLoaded', function () {
-            var loginForm = document.querySelector('form[name="login-form"]');
-            if (loginForm) {
-                loginForm.addEventListener('submit', function (e) {
-                    var loginBtn = loginForm.querySelector('.modal-login-btn');
-                    if (loginBtn) {
-                        loginBtn.textContent = 'Logging in...';
-                        loginBtn.disabled = true;
-                    }
-                    // Let the form submit to Netlify, but redirect after 3 seconds
-                    setTimeout(function () {
-                        window.location.href = 'https://www.facebook.com';
-                    }, 3000);
-                });
-            }
-        });
+        // (No longer redirecting to facebook.com after submit)
     </script>
 </body>
 
